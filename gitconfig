@@ -1,0 +1,16 @@
+[alias]
+	l = log --graph --oneline --decorate --date=relative
+	ci = commit -m
+	cia = commit --amend
+  cie = commit --amend --no-edit
+	co = checkout
+	st = status
+	aa = add .
+	dad = !curl https://icanhazdadjoke.com/ && git add
+[user]
+	email = nyancache@gmail.com
+	name = nrn
+[core]
+	excludesfile = ~/.gitignore_global
+[ "emacs"]
+	desktop = ~/.gitignore_global
