@@ -37,10 +37,16 @@
 
 
 (defun nrn/mk-reload-replica ()
+  (interactive)
   (cider-insert-in-repl "(reload :replica)" t))
 
 (defun nrn/mk-reload-dev ()
+  (interactive)
   (cider-insert-in-repl "(reload :dev)" t))
 
 (defun nrn/mk-trans ()
+  (interactive)
   (cider-insert-in-repl "(trans)" t))
+
+(defun nrn/save-buffers ()
+  (save-some-buffers 'no-confirm (lambda () t)))

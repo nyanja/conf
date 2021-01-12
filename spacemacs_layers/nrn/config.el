@@ -29,7 +29,7 @@
 (mouse-wheel-mode t)
 
 
-(add-hook 'focus-out-hook 'save-all-buffers)
+(add-hook 'focus-out-hook 'nrn/save-buffers)
 (add-hook 'magit-mode-hook 'evil-escape-mode)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
