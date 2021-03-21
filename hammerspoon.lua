@@ -9,5 +9,3 @@ end)
 hs.hotkey.bind({}, "F18", function()
     hs.keycodes.setLayout("Ukrainian")
 end)
-
-

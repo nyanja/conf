@@ -31,9 +31,10 @@
   (put-clojure-indent '-> 0)
   (put-clojure-indent '->> 0)
 
-  (push '("nil"    . ?無) prettify-symbols-alist)
-  (push '("false"  . ?假) prettify-symbols-alist)
-  (push '("true"   . ?真) prettify-symbols-alist))
+  ;(push '("nil"    . ?無) prettify-symbols-alist)
+  ;(push '("false"  . ?假) prettify-symbols-alist)
+  ;(push '("true"   . ?真) prettify-symbols-alist)
+  )
 
 
 (defun nrn/mk-reload-replica ()
