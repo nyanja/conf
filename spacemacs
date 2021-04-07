@@ -154,7 +154,7 @@ This function is called at the very end of Spacemacs initialization."
      ("\\?\\?\\?+" . "#dc752f"))))
  '(js-indent-level 2)
  '(line-spacing 0)
- '(mac-command-modifier (quote hyper))
+ ;'(mac-command-modifier (quote hyper))
  '(mode-line-percent-position (quote (6 "%q")))
  '(package-selected-packages
    (quote

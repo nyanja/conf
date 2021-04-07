@@ -1,5 +1,6 @@
 (setq-default
  mac-option-modifier 'meta
+ ;; mac-command-modifier 'super
  coding-system-for-read 'utf-8
  coding-system-for-write 'utf-8
  ruby-insert-encoding-magic-comment nil
@@ -25,7 +26,7 @@
 
 (global-prettify-symbols-mode t)
 
-(mac-auto-operator-composition-mode t)
+;(mac-auto-operator-composition-mode t)
 (mouse-wheel-mode t)
 
 

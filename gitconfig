@@ -12,5 +12,6 @@
 	name = nrn
 [core]
 	excludesfile = ~/.gitignore_global
+	editor = vim
 [ "emacs"]
 	desktop = ~/.gitignore_global

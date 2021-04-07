@@ -2,15 +2,12 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 
-
-export PATH="$HOME/.rbenv/bin:/usr/local/bin:$PATH"
-eval "$(rbenv init -)"
-
-
+# export PATH="$HOME/.rbenv/bin:/usr/local/bin:$PATH"
+# eval "$(rbenv init -)"
 
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/nyan/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -59,7 +56,7 @@ ZSH_THEME="af-magic"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-iterm-touchbar)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -91,13 +88,11 @@ alias be='bundle exec'
 alias dg='git diff'
 alias gdh='git diff HEAD^'
 alias raisl='rails'
-alias l='cd ~/f/heroes/Pangea'
 alias k='cd ~/f/web'
-
-export ZBS_PASSWORD=zbs
+alias a='cd ~/f/mkadmin'
 
 export PATH="/usr/local/sbin:$PATH"
-export PATH="/Users/nyan/.rbenv/shims/:$PATH"
-export PATH="/Users/nyan/Library/Python/2.7/bin:$PATH"
-export PATH="/Users/nyan/go/bin:$PATH"
-export LC_ALL=en_US.UTF-8
+export PATH="$HOME/.rbenv/shims/:$PATH"
+export PATH="$HOME/Library/Python/2.7/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+# export LC_ALL=en_US.UTF-8
