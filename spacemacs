@@ -32,7 +32,7 @@ values."
 
      (clojure :variables
               clojure-enable-linters '(clj-kondo)
-              clojure-enable-clj-refactor t
+              ;; clojure-enable-clj-refactor t
               )
      ;; lsp
 

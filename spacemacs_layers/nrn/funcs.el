@@ -1,8 +1,8 @@
 ;;;
 
 (defun nrn/init-clojure-mode ()
-  (enable-paredit-mode)
-  (clj-refactor-mode)
+  ;; (enable-paredit-mode)
+  ;; (clj-refactor-mode)
 
   (setq clojure-indent-style :always-indent)
 
