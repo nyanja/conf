@@ -29,10 +29,10 @@
 ;(mac-auto-operator-composition-mode t)
 (mouse-wheel-mode t)
 
-
 (add-hook 'focus-out-hook 'nrn/save-buffers)
 (add-hook 'magit-mode-hook 'evil-escape-mode)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'clojure-mode-hook #'nrn/init-clojure-mode)
+(add-hook 'web-mode-hook #'nrn/init-web-mode)
 (add-hook 'scss-mode-hook #'web-mode)

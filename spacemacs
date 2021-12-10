@@ -14,8 +14,9 @@ values."
    dotspacemacs-configuration-layer-path '()
 
    dotspacemacs-configuration-layers
-   '(lua
-     python
+   '(
+     ;; lua
+     ;; python
      shell
      javascript
      markdown
@@ -32,22 +33,22 @@ values."
 
      (clojure :variables
               clojure-enable-linters '(clj-kondo)
-              ;; clojure-enable-clj-refactor t
-              )
+              clojure-enable-clj-refactor t)
      ;; lsp
 
      nrn)
 
    dotspacemacs-additional-packages '(flycheck-clj-kondo
                                       po-mode
-                                      ;; pretty-mode
-                                        ;telega
                                       )
    dotspacemacs-frozen-packages '()
    dotspacemacs-excluded-packages '(spaceline)
    dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
+  (toggle-scroll-bar -1)
+  (scroll-bar-mode -1)
+
   (setq-default
    dotspacemacs-enable-server nil
    dotspacemacs-mode-line-theme '(spacemacs)
@@ -131,13 +132,15 @@ This function is called at the very end of Spacemacs initialization."
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(cider-switch-to-repl-on-insert nil)
+ '(compilation-scroll-output 'first-error)
  '(custom-safe-themes
-   (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default)))
+   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default))
+ '(evil-want-C-u-scroll nil)
  '(evil-want-Y-yank-to-eol nil)
+ '(highlight-parentheses-background-colors '("#e8fce8" "#c1e7f8" "#f8e8e8"))
+ '(highlight-parentheses-colors '("#40883f" "#0287c8" "#b85c57"))
  '(hl-todo-keyword-faces
-   (quote
-    (("TODO" . "#dc752f")
+   '(("TODO" . "#dc752f")
      ("NEXT" . "#dc752f")
      ("THEM" . "#2d9574")
      ("PROG" . "#3a81c3")
@@ -151,33 +154,30 @@ This function is called at the very end of Spacemacs initialization."
      ("TEMP" . "#b1951d")
      ("FIXME" . "#dc752f")
      ("XXX+" . "#dc752f")
-     ("\\?\\?\\?+" . "#dc752f"))))
+     ("\\?\\?\\?+" . "#dc752f")))
  '(js-indent-level 2)
  '(line-spacing 0)
- ;'(mac-command-modifier (quote hyper))
- '(mode-line-percent-position (quote (6 "%q")))
+ '(mode-line-percent-position '(6 "%q"))
  '(package-selected-packages
-   (quote
-    (lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami origami helm-lsp lsp-mode yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org tern telega rainbow-identifiers visual-fill-column tagedit string-inflection sql-indent smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode pretty-mode popwin po-mode persp-mode pcre2el paradox orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck-joker flycheck-clj-kondo flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit git-commit with-editor transient evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg emmet-mode elisp-slime-nav dumb-jump s diminish define-word company-web web-completion-data dash company-statistics company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections multiple-cursors paredit lv clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu cider sesman seq spinner queue pkg-info parseedn clojure-mode parseclj a epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup heroku-theme)))
+   '(lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami origami helm-lsp lsp-mode yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org tern telega rainbow-identifiers visual-fill-column tagedit string-inflection sql-indent smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode pretty-mode popwin po-mode persp-mode pcre2el paradox orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck-joker flycheck-clj-kondo flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit git-commit with-editor transient evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg emmet-mode elisp-slime-nav dumb-jump s diminish define-word company-web web-completion-data dash company-statistics company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections multiple-cursors paredit lv clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu cider sesman seq spinner queue pkg-info parseedn clojure-mode parseclj a epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup heroku-theme))
  '(paradox-github-token t)
- '(pdf-view-midnight-colors (quote ("#655370" . "#fbf8ef")))
+ '(pdf-view-midnight-colors '("#655370" . "#fbf8ef"))
  '(projectile-globally-ignored-directories
-   (quote
-    (".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "img")))
+   '(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "img"))
+ '(scroll-bar-mode nil)
+ '(scroll-conservatively 101)
+ '(scroll-preserve-screen-position t)
  '(sql-connection-alist
-   (quote
-    (("mk"
-      (sql-product
-       (quote postgres))
+   '(("mk"
+      (sql-product 'postgres)
       (sql-user "modnakastauser")
       (sql-database
        #("modnakasta" 0 10
          (ws-butler-chg chg)))
-      (sql-server "")))))
+      (sql-server ""))))
  '(vc-annotate-background "#ecf0f1")
  '(vc-annotate-color-map
-   (quote
-    ((30 . "#e74c3c")
+   '((30 . "#e74c3c")
      (60 . "#c0392b")
      (90 . "#e67e22")
      (120 . "#d35400")
@@ -188,7 +188,7 @@ This function is called at the very end of Spacemacs initialization."
      (270 . "#1abc9c")
      (300 . "#16a085")
      (330 . "#2492db")
-     (360 . "#0a74b9"))))
+     (360 . "#0a74b9")))
  '(vc-annotate-very-old-color "#0a74b9")
  '(wakatime-python-bin nil)
  '(window-divider-default-right-width 1)

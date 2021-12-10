@@ -56,7 +56,7 @@ ZSH_THEME="af-magic"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-iterm-touchbar)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -95,4 +95,5 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/.rbenv/shims/:$PATH"
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.emacs.d/bin:$PATH"
 # export LC_ALL=en_US.UTF-8

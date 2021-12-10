@@ -1,8 +1,11 @@
 ;;;
 
 (defun nrn/init-clojure-mode ()
-  ;; (enable-paredit-mode)
-  ;; (clj-refactor-mode)
+  (enable-paredit-mode)
+  (clj-refactor-mode)
+
+  (smartparens-mode t)
+  (aggressive-indent-mode t)
 
   (setq clojure-indent-style :always-indent)
 
@@ -35,6 +38,10 @@
   ;(push '("false"  . ?假) prettify-symbols-alist)
   ;(push '("true"   . ?真) prettify-symbols-alist)
   )
+
+(defun nrn/init-web-mode ()
+  (smartparens-mode t)
+  (aggressive-indent-mode t))
 
 
 (defun nrn/mk-reload-replica ()
