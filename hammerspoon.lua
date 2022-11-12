@@ -7,5 +7,5 @@ hs.hotkey.bind({}, "F17", function()
 end)
 
 hs.hotkey.bind({}, "F18", function()
-    hs.keycodes.setLayout("Ukrainian")
+    hs.keycodes.setLayout("Ukrainian – Legacy")
 end)

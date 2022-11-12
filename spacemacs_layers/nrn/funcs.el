@@ -5,9 +5,10 @@
   (clj-refactor-mode)
 
   (smartparens-mode t)
-  (aggressive-indent-mode t)
+  ;; (aggressive-indent-mode t)
 
   (setq clojure-indent-style :always-indent)
+  (setq clojure-align-forms-automatically t)
 
   (define-clojure-indent
     (some->  0)
@@ -34,6 +35,9 @@
   (put-clojure-indent '-> 0)
   (put-clojure-indent '->> 0)
 
+  (add-to-list 'clojure-align-cond-forms "better-cond.core/when-let")
+  (add-to-list 'clojure-align-cond-forms "better-cond.core/if-let")
+
   ;(push '("nil"    . ?無) prettify-symbols-alist)
   ;(push '("false"  . ?假) prettify-symbols-alist)
   ;(push '("true"   . ?真) prettify-symbols-alist)
@@ -41,7 +45,8 @@
 
 (defun nrn/init-web-mode ()
   (smartparens-mode t)
-  (aggressive-indent-mode t))
+  ;; (aggressive-indent-mode t)
+  )
 
 
 (defun nrn/mk-reload-replica ()

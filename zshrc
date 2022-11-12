@@ -56,7 +56,7 @@ ZSH_THEME="af-magic"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-iterm-touchbar)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -77,8 +77,6 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 alias master='git checkout master && git pull'
 alias rebase='git pull origin master --rebase'
@@ -91,9 +89,21 @@ alias raisl='rails'
 alias k='cd ~/f/web'
 alias a='cd ~/f/mkadmin'
 
+alias pg_start="launchctl load ~/Library/LaunchAgents"
+alias pg_stop="launchctl unload ~/Library/LaunchAgents"
+
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/.rbenv/shims/:$PATH"
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.emacs.d/bin:$PATH"
-# export LC_ALL=en_US.UTF-8
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+export PORT=5002
+
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+
+source ~/.iterm2_shell_integration.zsh
+

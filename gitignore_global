@@ -6,3 +6,4 @@
 .rebel_readline_history
 .clj-kondo
 **/.emacs.d/private*
+node_modules
