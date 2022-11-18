@@ -32,7 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one
+(setq doom-theme 'doom-nord
       doom-font (font-spec :family "Iosevka SS04" :size 18)
       doom-localleader-key ","
       doom-font-increment 1
@@ -93,22 +93,21 @@
       "C-;"       #'comment-line
       "s-w"       #'kill-current-buffer)
 
-(map! :leader "SPC" #'execute-extended-command
 
-      ;; "ttl" #'(lambda () (load-theme 'doom-one-light))
-      ;; "ttd" #'(lambda () (load-theme 'doom-one))
+(map! :leader
+      "SPC" #'execute-extended-command
+
+      "ttl" (lambda () (interactive) (load-theme 'doom-one-light))
+      "ttd" (lambda () (interactive) (load-theme 'doom-nord))
 
       (:prefix ("d" . "nrn")
                (:prefix ("k" . "mk")
                 :desc "trans"
-                "t" #'(lambda ()
-                        (cider-insert-in-repl "(trans)" t))
+                "t" (lambda () (interactive) (cider-insert-in-repl "(trans)" t))
                 :desc "reload :dev"
-                "d" #'(lambda ()
-                        (cider-insert-in-repl "(reload :dev)" t))
+                "d" (lambda () (interactive) (cider-insert-in-repl "(reload :dev)" t))
                 :desc "reload :replica"
-                "r" #'(lambda ()
-                        (cider-insert-in-repl "(reload :replica)" t)))))
+                "r" (lambda () (interactive) (cider-insert-in-repl "(reload :replica)" t)))))
 
 
 (define-key evil-normal-state-map ";" nil)
@@ -129,3 +128,50 @@
            :desc "(a_b) -> b"   :n "k" #'sp-splice-sexp-killing-backward
            :desc "(a_b c) -> b" :n "a" #'sp-splice-sexp-killing-around)))
 
+(map! :map cider-mode-map
+      :localleader
+      "ef" #'cider-eval-defun-at-point)
+
+
+
+
+(defun nrn/init-clojure-mode ()
+  (enable-paredit-mode)
+  (clj-refactor-mode)
+
+  ;; (smartparens-mode t)
+  ;; (aggressive-indent-mode t)
+
+  (setq clojure-indent-style :always-indent)
+  (setq clojure-align-forms-automatically t)
+
+  (define-clojure-indent
+    (some->  0)
+    (some->> 0)
+    (as->    0)
+    (and     0)
+    (or      0)
+    (>       0)
+    (<       0)
+    (>=      0)
+    (<=      0)
+    (=       0)
+    (not=    0)
+    (+       0)
+    (-       0)
+    (*       0)
+    (/       0)
+    (mod     0)
+    (rem     0)
+    (max     0)
+    (min     0))
+
+  ;;  -> ->>  these form collide with elisp macros
+  (put-clojure-indent '-> 0)
+  (put-clojure-indent '->> 0)
+
+  (add-to-list 'clojure-align-cond-forms "better-cond.core/when-let")
+  (add-to-list 'clojure-align-cond-forms "better-cond.core/if-let"))
+
+
+(add-hook! 'clojure-mode-hook #'nrn/init-clojure-mode)
