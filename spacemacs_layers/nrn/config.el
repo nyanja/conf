@@ -12,8 +12,8 @@
  web-mode-css-indent-offset 2
  web-mode-code-indent-offset 2
 
- mouse-wheel-scroll-amount '(3 ((shift) . 1) ((control) . nil))
- mouse-wheel-progressive-speed nil
+ ;; mouse-wheel-scroll-amount '(3 ((shift) . 1) ((control) . nil))
+ ;; mouse-wheel-progressive-speed nil
 
  mac-pass-command-to-system nil
  mac-pass-control-to-system nil)

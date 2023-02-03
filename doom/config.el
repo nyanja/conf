@@ -9,36 +9,17 @@
 (setq user-full-name "Oleksandr Syletskyi"
       user-mail-address "nyancache@gmail.com")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-unicode-font' -- for unicode glyphs
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept. For example:
-;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;;
-;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
 
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-nord
-      doom-font (font-spec :family "Iosevka SS04" :size 18)
+      doom-font (font-spec :family "Iosevka SS04" :size 17)
       doom-localleader-key ","
       doom-font-increment 1
-      which-key-idle-delay 0.3
+      which-key-idle-delay 0.4
       display-line-numbers-type nil
-      mac-pass-command-to-system nil)
+      mac-pass-command-to-system nil
+      ;; find newly added files
+      projectile-enable-caching nil
+      magit-save-repository-buffers t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -85,10 +66,20 @@
 (map! "M-q"       #'indent-region
       "C-s"       #'consult-line :desc "Find in a buffer"
 
-      "<s-left>"  #'previous-buffer
-      "<s-right>" #'next-buffer
-      "<home>"    #'previous-buffer
-      "<end>"     #'next-buffer
+      :nvi "<s-left>"  #'previous-buffer
+      :nvi "<s-right>" #'next-buffer
+      :nvi "<home>"    #'previous-buffer
+      :nvi "<end>"     #'next-buffer
+
+      :desc "(  )>" :ni "s-k" #'sp-forward-barf-sexp
+      :desc "(  <)" :ni "s-l" #'sp-forward-slurp-sexp
+      :desc "<(  )" :ni "s-h" #'sp-backward-slurp-sexp
+      :desc "(>  )" :ni "s-j" #'sp-backward-barf-sexp
+
+      :desc "(a) -> a"     :ni "M-s" #'sp-splice-sexp
+      :desc "(a_b) -> a"   :ni "M-j" #'sp-splice-sexp-killing-forward
+      :desc "(a_b) -> b"   :ni "M-k" #'sp-splice-sexp-killing-backward
+      :desc "(a_b c) -> b" :ni "M-a" #'sp-splice-sexp-killing-around
 
       "C-;"       #'comment-line
       "s-w"       #'kill-current-buffer)
@@ -115,6 +106,9 @@
 (map!
  (:prefix ";"
           :n "r" #'transpose-sexps
+          :n "(" #'sp-wrap-round
+          :n "[" #'sp-wrap-square
+          :n "{" #'sp-wrap-curly
 
           (:prefix ("f" . "slurp/barf")
            :desc "(  )>" :n "k" #'sp-forward-barf-sexp
@@ -128,50 +122,10 @@
            :desc "(a_b) -> b"   :n "k" #'sp-splice-sexp-killing-backward
            :desc "(a_b c) -> b" :n "a" #'sp-splice-sexp-killing-around)))
 
-(map! :map cider-mode-map
-      :localleader
-      "ef" #'cider-eval-defun-at-point)
 
 
 
 
-(defun nrn/init-clojure-mode ()
-  (enable-paredit-mode)
-  (clj-refactor-mode)
-
-  ;; (smartparens-mode t)
-  ;; (aggressive-indent-mode t)
-
-  (setq clojure-indent-style :always-indent)
-  (setq clojure-align-forms-automatically t)
-
-  (define-clojure-indent
-    (some->  0)
-    (some->> 0)
-    (as->    0)
-    (and     0)
-    (or      0)
-    (>       0)
-    (<       0)
-    (>=      0)
-    (<=      0)
-    (=       0)
-    (not=    0)
-    (+       0)
-    (-       0)
-    (*       0)
-    (/       0)
-    (mod     0)
-    (rem     0)
-    (max     0)
-    (min     0))
-
-  ;;  -> ->>  these form collide with elisp macros
-  (put-clojure-indent '-> 0)
-  (put-clojure-indent '->> 0)
-
-  (add-to-list 'clojure-align-cond-forms "better-cond.core/when-let")
-  (add-to-list 'clojure-align-cond-forms "better-cond.core/if-let"))
 
 
-(add-hook! 'clojure-mode-hook #'nrn/init-clojure-mode)
+(load! "modes/clojure.el")

@@ -14,7 +14,8 @@ values."
    dotspacemacs-configuration-layer-path '()
 
    dotspacemacs-configuration-layers
-   '(lua
+   '(python
+     lua
      ;; lua
      ;; python
      shell
@@ -63,6 +64,11 @@ values."
      flycheck-clj-kondo
      po-mode
      (forge :toggle nil)
+
+     (copilot :location (recipe
+                         :fetcher github
+                         :repo "zerolfx/copilot.el"
+                         :files ("*.el" "dist")))
      )
    dotspacemacs-frozen-packages '()
    dotspacemacs-excluded-packages '(spaceline)
@@ -139,7 +145,24 @@ values."
 
   (setq
    ;; debug-on-error t
-   ))
+   )
+
+
+  ;; copilot
+  ;;
+  (with-eval-after-load 'company
+    ;; disable inline previews
+    (delq 'company-preview-if-just-one-frontend company-frontends))
+
+  (with-eval-after-load 'copilot
+    (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+    (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
+
+  (add-hook 'prog-mode-hook 'copilot-mode)
+
+  (define-key evil-insert-state-map (kbd "C-<tab>") 'copilot-accept-completion-by-word)
+  (define-key evil-insert-state-map (kbd "C-TAB") 'copilot-accept-completion-by-word)
+  )
 
 
 (defun dotspacemacs/emacs-custom-settings ()
@@ -164,7 +187,6 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-want-C-u-scroll nil)
  '(evil-want-Y-yank-to-eol nil)
  '(highlight-parentheses-background-colors '("#e8fce8" "#c1e7f8" "#f8e8e8"))
- '(highlight-parentheses-colors '("#40883f" "#0287c8" "#b85c57"))
  '(hl-todo-keyword-faces
    '(("TODO" . "#dc752f")
      ("NEXT" . "#dc752f")
@@ -185,7 +207,7 @@ This function is called at the very end of Spacemacs initialization."
  '(line-spacing 0)
  '(mode-line-percent-position '(6 "%q"))
  '(package-selected-packages
-   '(ghub forge helm-gtags ggtags counsel-gtags counsel swiper ivy company-lua lua-mode yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org tern telega rainbow-identifiers visual-fill-column tagedit string-inflection sql-indent smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode pretty-mode popwin po-mode persp-mode pcre2el paradox orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck-joker flycheck-clj-kondo flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit git-commit with-editor transient evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg emmet-mode elisp-slime-nav dumb-jump s diminish define-word company-web web-completion-data dash company-statistics company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections multiple-cursors paredit lv clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu cider sesman seq spinner queue pkg-info parseedn clojure-mode parseclj a epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup heroku-theme))
+   '(blacken code-cells company-anaconda anaconda-mode counsel-gtags counsel swiper ivy cython-mode dap-mode lsp-docker bui ggtags helm-cscope helm-gtags helm-pydoc importmagic epc ctable concurrent deferred live-py-mode lsp-pyright lsp-python-ms nose pip-requirements pipenv load-env-vars pippel poetry py-isort pydoc pyenv-mode pythonic pylookup pytest pyvenv sphinx-doc stickyfunc-enhance xcscope yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org tern telega rainbow-identifiers visual-fill-column tagedit string-inflection sql-indent smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode pretty-mode popwin po-mode persp-mode pcre2el paradox orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck-joker flycheck-clj-kondo flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit git-commit with-editor transient evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg emmet-mode elisp-slime-nav dumb-jump s diminish define-word company-web web-completion-data dash company-statistics company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections multiple-cursors paredit lv clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu cider sesman seq spinner queue pkg-info parseedn clojure-mode parseclj a epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup heroku-theme))
  '(paradox-github-token t)
  '(pdf-view-midnight-colors '("#655370" . "#fbf8ef"))
  '(projectile-globally-ignored-directories

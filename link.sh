@@ -9,8 +9,9 @@ mapping=(
     tmux.conf         .tmux.conf
     karabiner.json    .config/karabiner/karabiner.json
     spacemacs         .spacemacs
-    spacemacs_layers  .emacs.d/private
+    spacemacs_layers  .emacs.spc/private
     doom              .doom.d
+    emacs             .emacs.nc
     emacs-profiles.el .emacs-profiles.el
 )
 
