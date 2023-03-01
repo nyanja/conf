@@ -34,7 +34,5 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
-source ~/.iterm2_shell_integration.zsh
-
 export PORT=5002
 export PATH="/opt/homebrew/sbin:$PATH"

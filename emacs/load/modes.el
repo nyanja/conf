@@ -1,14 +1,18 @@
 (use-package clojure-mode
   :ensure t
   :commands put-clojure-indent
+
   :mode ("\\.boot\\'" . clojure-mode)
         ("\\.edn\\'" . clojure-mode)
         ("\\.bb\\'" . clojure-mode)
+
   :init
+  (add-hook 'clojure-mode-hook 'paredit-mode)
   (setq clojure-indent-style :always-indent)
   (setq clojure-thread-all-but-last t)
   (setq clojure-align-forms-automatically t)
   (setq clojure-toplevel-inside-comment-form t)
+
   :config
   (define-clojure-indent
     (some->  0)

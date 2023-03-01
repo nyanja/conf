@@ -1,8 +1,12 @@
+(message "packages")
+
 (use-package which-key
   :ensure t
+
   :config
-  ;; TODO timings
-  (which-key-mode))
+  (which-key-mode)
+  (setq which-key-idle-delay 0.2)
+  )
 
 
 (use-package paredit
@@ -13,7 +17,6 @@
   ;;        ;; ("C-M-," . paredit-forward-barf-sexp)
   ;;        )
   :init
-  (add-hook 'clojure-mode-hook 'paredit-mode)
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode))
 
 
@@ -40,6 +43,7 @@
   (evil-leader/set-key "SPC" 'helm-M-x)
   (evil-leader/set-key "/" 'helm-ag)
   )
+
 
 
 (use-package company
@@ -70,11 +74,15 @@
 
 (use-package projectile
   :ensure t
-  :bind (;; :map projectile-command-map
-	      )
+  :bind (
+         ;;bind  evil leader p to projectile comand map
+
+         ;; :map evil-leader-map
+         ;; ("p" . projectile-command-map)
+         )
   :config
   (projectile-mode)
-  (evil-leader/set-key (kbd "p") projectile-command-map)
+  (evil-leader/set-key "p" 'projectile-command-map)
   )
 
 

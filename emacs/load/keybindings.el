@@ -1,6 +1,6 @@
 (mapc (lambda (x) (global-set-key (kbd (car x)) (nth 1 x)))
       '(
-	("H-s"       save-buffer)
+	      ("H-s"       save-buffer)
         ("H-q"       save-buffers-kill-emacs)
         ("H-x"       kill-region)
         ("H-c"       kill-ring-save)
@@ -12,9 +12,9 @@
         ("H-="       zoom-frm-in)
         ("H--"       zoom-frm-out)
 
-        ("C-H-h"  previous-buffer)
+        ("C-H-h"     previous-buffer)
         ("<home>"    previous-buffer)
-        ("C-H-l" next-buffer)
+        ("C-H-l"     next-buffer)
         ("<end>"     next-buffer)
 
         ;; ("H-/"       comment-line)
@@ -32,4 +32,4 @@
         ("M-j"       sp-splice-sexp-killing-forward)
         ("M-k"       sp-splice-sexp-killing-backward)
         ("M-s"       sp-splice-sexp)
-	))
+	      ))

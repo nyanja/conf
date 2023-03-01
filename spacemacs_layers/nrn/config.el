@@ -36,3 +36,6 @@
 (add-hook 'clojure-mode-hook #'nrn/init-clojure-mode)
 (add-hook 'web-mode-hook #'nrn/init-web-mode)
 (add-hook 'scss-mode-hook #'web-mode)
+
+(with-eval-after-load 'lsp-mode
+  (nrn/init-lsp-mode))

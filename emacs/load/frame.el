@@ -1,4 +1,7 @@
+
+(setq server-name "nc-server")
 (server-start)
+
 
 ;; syntax highlight
 (when (fboundp 'global-font-lock-mode)

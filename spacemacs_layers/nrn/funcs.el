@@ -63,3 +63,6 @@
 
 (defun nrn/save-buffers ()
   (save-some-buffers 'no-confirm (lambda () t)))
+
+(defun nrn/init-lsp-mode ()
+  (add-to-list 'lsp-language-id-configuration '(".*\\.scss" . "scss")))
