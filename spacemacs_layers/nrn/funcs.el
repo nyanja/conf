@@ -1,6 +1,16 @@
 ;;;
 
+(defvar nrn/lsp-clojure-enabled nil)
+(defvar nrn/lsp-clojure-enabled-selected nil)
+
+
 (defun nrn/init-clojure-mode ()
+  (when (and (not nrn/lsp-clojure-enabled) (not nrn/lsp-clojure-enabled-selected))
+    (setq nrn/lsp-clojure-enabled (y-or-n-p "Enable lsp for clojure?")))
+  (when nrn/lsp-clojure-enabled
+    (lsp))
+
+
   (enable-paredit-mode)
   (clj-refactor-mode)
 
@@ -38,9 +48,6 @@
   (add-to-list 'clojure-align-cond-forms "better-cond.core/when-let")
   (add-to-list 'clojure-align-cond-forms "better-cond.core/if-let")
 
-  ;(push '("nil"    . ?無) prettify-symbols-alist)
-  ;(push '("false"  . ?假) prettify-symbols-alist)
-  ;(push '("true"   . ?真) prettify-symbols-alist)
   )
 
 (defun nrn/init-web-mode ()

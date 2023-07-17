@@ -51,6 +51,7 @@ values."
               )
 
      (lsp :variables
+          lsp-enable-indentation nil
           lsp-ui-doc-enable nil      ;; disable all doc popups
           lsp-ui-sideline-enable nil ;; disable sideline bar for less distraction
           treemacs-space-between-root-nodes nil) ;; no spacing in treemacs views
@@ -101,7 +102,8 @@ values."
    dotspacemacs-startup-lists '((recents . 5)
                                 (projects . 7))
    dotspacemacs-scratch-mode 'text-mode
-   dotspacemacs-themes '(plan9
+   dotspacemacs-themes '(modus-vivendi
+                         plan9
                          heroku)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Iosevka SS04"
