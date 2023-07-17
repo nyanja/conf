@@ -1,12 +1,26 @@
 (message "packages")
 
+(unless (package-installed-p 'quelpa)
+  (with-temp-buffer
+    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+    (eval-buffer)
+    (quelpa-self-upgrade)))
+
+
+(quelpa
+ '(quelpa-use-package
+   :fetcher git
+   :url "https://github.com/quelpa/quelpa-use-package.git"))
+
+(require 'quelpa-use-package)
+
+
 (use-package which-key
   :ensure t
 
   :config
   (which-key-mode)
-  (setq which-key-idle-delay 0.2)
-  )
+  (setq which-key-idle-delay 0.2))
 
 
 (use-package paredit
@@ -42,6 +56,7 @@
   (evil-leader/set-leader "SPC")
   (evil-leader/set-key "SPC" 'helm-M-x)
   (evil-leader/set-key "/" 'helm-ag)
+  (evil-leader/set-key "b" 'helm-mini)
   )
 
 

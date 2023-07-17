@@ -1,3 +1,4 @@
+
 (use-package clojure-mode
   :ensure t
   :commands put-clojure-indent
@@ -71,3 +72,11 @@
   (setq web-mode-style-padding 2)
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-script-padding 2))
+
+
+
+(use-package copilot
+  :quelpa (copilot :fetcher github
+                   :repo "zerolfx/copilot.el"
+                   :branch "main"
+                   :files ("dist" "*.el")))

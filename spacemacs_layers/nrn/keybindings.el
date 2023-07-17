@@ -43,6 +43,7 @@
  ""
  :global
  (("d" "nrn"
+   ("r" nrn/sort-and-align-clj-require "sort requires")
    ("k" "mk"
     ("r" nrn/mk-reload-replica "reload replica")
     ("d" nrn/mk-reload-dev "reload dev")

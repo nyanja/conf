@@ -2,6 +2,7 @@
 *.el~
 /emacs/el-get/
 /emacs/elpa/
+/emacs/quelpa/
 /emacs/history
 /emacs/places
 /emacs/smex*

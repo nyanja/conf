@@ -10,8 +10,6 @@ parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
-# F1=\eOP F2=\eOQ F3=\eOR F4=\eOS F5=\e[15~ F6=\e[17~ F7=\e[18~ F8=\e[19~ F9=\e[20~ F10=\e[21~ F12=\e[24~
-
 alias push='git push origin $(parse_git_branch)'
 
 alias master='git checkout master && git pull'

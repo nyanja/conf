@@ -1,6 +1,6 @@
 (mapc (lambda (x) (global-set-key (kbd (car x)) (nth 1 x)))
       '(
-	      ("H-s"       save-buffer)
+        ("H-s"       save-buffer)
         ("H-q"       save-buffers-kill-emacs)
         ("H-x"       kill-region)
         ("H-c"       kill-ring-save)
@@ -31,5 +31,8 @@
         ("M-l"       sp-kill-symbol)
         ("M-j"       sp-splice-sexp-killing-forward)
         ("M-k"       sp-splice-sexp-killing-backward)
-        ("M-s"       sp-splice-sexp)
-	      ))
+        ("M-s"       sp-splice-sexp)))
+
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+
+(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)

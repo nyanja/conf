@@ -37,5 +37,20 @@
 (add-hook 'web-mode-hook #'nrn/init-web-mode)
 (add-hook 'scss-mode-hook #'web-mode)
 
+(add-hook 'evil-normal-state-entry-hook
+          (lambda ()
+            (when
+                (or
+                 (eq major-mode 'emacs-lisp-mode)
+                 (eq major-mode 'lisp-mode)
+                 (eq major-mode 'lisp-interaction-mode)
+                 (eq major-mode 'scheme-mode)
+                 (eq major-mode 'clojure-mode)
+                 (eq major-mode 'clojurescript-mode)
+                 (eq major-mode 'clojurec-mode)
+                 (eq major-mode 'clojurex-mode))
+
+              (nrn/indent-sexp))))
+
 (with-eval-after-load 'lsp-mode
   (nrn/init-lsp-mode))

@@ -66,3 +66,29 @@
 
 (defun nrn/init-lsp-mode ()
   (add-to-list 'lsp-language-id-configuration '(".*\\.scss" . "scss")))
+
+
+(defun nrn/sort-and-align-clj-require ()
+  (interactive)
+  (save-excursion
+    (when (or (string= (file-name-extension buffer-file-name) "clj")
+              (string= (file-name-extension buffer-file-name) "cljc")
+              (string= (file-name-extension buffer-file-name) "cljs"))
+      (goto-char (point-min))
+      (when (search-forward-regexp "(:require" nil t)
+        (let ((start (point))
+              (end (progn (up-list) (1- (point)))))
+          (goto-char end)
+          (while (search-backward-regexp "^\s*[\n]" nil t)
+            (setq start (point)))
+          (setq start (1+ start))
+          (sort-lines nil start end)
+          (align-regexp start end "\\(\\s-*\\):as" 1 1 t))))))
+
+
+(defun nrn/indent-sexp ()
+  (interactive)
+  (save-excursion
+    (beginning-of-defun)
+    (mark-sexp)
+    (indent-for-tab-command)))

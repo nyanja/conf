@@ -77,8 +77,8 @@
         (load name))
       '(
         "packages"
-	      "modes"
-	      "frame"
-	      "keybindings"
-	      "hooks"
+	"modes"
+	"frame"
+	"keybindings"
+	"hooks"
         ))

@@ -3,5 +3,6 @@
 
 (add-hook 'focus-out-hook 'nrn/save-buffers)
 
-
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(add-hook 'prog-mode-hook 'copilot-mode)
