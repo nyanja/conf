@@ -20,6 +20,7 @@ values."
      ;; python
      shell
      javascript
+     typescript
      markdown
      yaml
      (html :variables
@@ -174,6 +175,25 @@ values."
 
   (define-key evil-insert-state-map (kbd "<backtab>") 'copilot-accept-completion-by-word)
   ;; (define-key evil-insert-state-map (kbd "C-TAB") 'copilot-accept-completion-by-word)
+
+
+  ;; do not ruin all layouts with 'too many open files' error
+  (defun limit-buffers-in-layout ()
+    (let* ((user-buffers (delq nil
+                               (mapcar (lambda (b)
+                                         (unless (string-match-p "^\\*.*\\*$" (buffer-name b))
+                                           b))
+                                       (persp-buffer-list)))))
+      (when (> (length user-buffers) 16)
+        (let* ((sorted-buffers (sort user-buffers (lambda (a b)
+                                                    (time-less-p
+                                                     (with-current-buffer b
+                                                       (or buffer-display-time '(0 0 0 0)))
+                                                     (with-current-buffer a
+                                                       (or buffer-display-time '(0 0 0 0))))))))
+          (kill-buffer (car (last sorted-buffers)))))))
+
+  (add-hook 'buffer-list-update-hook 'limit-buffers-in-layout)
 
 
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode

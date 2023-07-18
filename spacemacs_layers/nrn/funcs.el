@@ -6,7 +6,8 @@
 
 (defun nrn/init-clojure-mode ()
   (when (and (not nrn/lsp-clojure-enabled) (not nrn/lsp-clojure-enabled-selected))
-    (setq nrn/lsp-clojure-enabled (y-or-n-p "Enable lsp for clojure?")))
+    (setq nrn/lsp-clojure-enabled (y-or-n-p "Enable lsp for clojure?"))
+    (setq nrn/lsp-clojure-enabled-selected t))
   (when nrn/lsp-clojure-enabled
     (lsp))
 
