@@ -1,3 +1,7 @@
+hs.hotkey.bind({}, "F15", function()
+    hs.keycodes.setLayout("Spanish")
+end)
+
 hs.hotkey.bind({}, "F16", function()
     hs.keycodes.setLayout("ABC")
 end)

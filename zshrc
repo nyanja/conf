@@ -22,6 +22,8 @@ alias gdh='git diff HEAD^'
 # alias pg_start="launchctl load ~/Library/LaunchAgents"
 # alias pg_stop="launchctl unload ~/Library/LaunchAgents"
 
+export HOMEBREW_NO_AUTO_UPDATE=1
+
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/.emacs.doom/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"

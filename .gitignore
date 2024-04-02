@@ -1,6 +1,7 @@
 *.elc
 *.el~
 .lsp
+*automatic_backups*
 /emacs/el-get/
 /emacs/elpa/
 /emacs/quelpa/

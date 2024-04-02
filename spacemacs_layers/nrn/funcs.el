@@ -69,6 +69,11 @@
   (interactive)
   (cider-insert-in-repl "(trans)" t))
 
+(defun nrn/cider-clear-aliases ()
+  (interactive)
+  (cider-insert-in-repl
+   "(require 'clojure.tools.namespace.repl)(clojure.tools.namespace.repl/clear-ns-aliases)" t))
+
 (defun nrn/save-buffers ()
   (save-some-buffers 'no-confirm (lambda () t)))
 

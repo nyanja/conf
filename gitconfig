@@ -6,12 +6,9 @@
 	co = checkout
 	st = status
 	aa = add .
-	dad = !curl https://icanhazdadjoke.com/ && git add
 [user]
 	email = nyancache@gmail.com
-	name = nrn
+	name = Alex Syletskyi
 [core]
 	excludesfile = ~/.gitignore_global
 	editor = vim
-[ "emacs"]
-	desktop = ~/.gitignore_global

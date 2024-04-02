@@ -5,8 +5,7 @@
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
-You should not put any user code in this function besides modifying the variable
-values."
+   You should not put any user code in this function besides modifying the variable values."
   (setq-default
    dotspacemacs-distribution 'spacemacs
    dotspacemacs-enable-lazy-installation 'unused
@@ -14,10 +13,10 @@ values."
    dotspacemacs-configuration-layer-path '()
 
    dotspacemacs-configuration-layers
-   '(rust
+   '(docker
+     rust
      python
      lua
-     ;; python
      shell
      javascript
      typescript
@@ -37,10 +36,11 @@ values."
            ruby-version-manager 'rbenv)
 
      ;; parinfer
+
      (clojure :variables
-              clojure-backend 'cider              ;; use cider and disable lsp
-              clojure-enable-linters '(clj-kondo) ;; clj-kondo included in lsp
-              cider-repl-display-help-banner nil  ;; disable help banner
+              clojure-backend 'cider
+              clojure-enable-linters '(clj-kondo)
+              cider-repl-display-help-banner nil
               cider-pprint-fn 'fipp               ;; fast pretty printing
               clojure-enable-clj-refactor             t
               ;; clojure-indent-style 'align-arguments
@@ -48,8 +48,7 @@ values."
               clojure-toplevel-inside-comment-form t ;; evaluate expressions in comment as top level
               cider-result-overlay-position 'at-point ;; results shown right after expression
               cider-overlays-use-font-lock t
-              cider-repl-buffer-size-limit 100 ;; limit lines shown in REPL buffer
-              )
+              cider-repl-buffer-size-limit 100)
 
      (lsp :variables
           lsp-enable-indentation nil
@@ -57,12 +56,10 @@ values."
           lsp-ui-sideline-enable nil ;; disable sideline bar for less distraction
           treemacs-space-between-root-nodes nil) ;; no spacing in treemacs views
 
-
      nrn)
 
    dotspacemacs-additional-packages
-   '(
-     sqlite3
+   '(sqlite3
      kaocha-runner
      flycheck-clj-kondo
      (forge :toggle nil)
@@ -80,13 +77,13 @@ values."
 (defun dotspacemacs/init ()
   ;; prevent Too many open files error
   ;; (setq max-specpdl-size 4000)
-  (setq max-lisp-eval-depth 4000)
+  ;; (setq max-lisp-eval-depth 4000)
 
   (toggle-scroll-bar -1)
   (scroll-bar-mode -1)
 
   (setq-default
-   dotspacemacs-enable-server nil
+   ;; dotspacemacs-enable-server nil
    dotspacemacs-mode-line-theme '(spacemacs)
    dotspacemacs-elpa-https t
    dotspacemacs-elpa-timeout 5
@@ -121,7 +118,7 @@ values."
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m")
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
-   dotspacemacs-auto-resume-layouts t
+   ;; dotspacemacs-auto-resume-layouts t
    dotspacemacs-large-file-size 1
    dotspacemacs-auto-save-file-location 'cache
    dotspacemacs-max-rollback-slots 5
@@ -154,12 +151,10 @@ values."
   (with-eval-after-load 'lsp-mode
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]migrations\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]resources\\'")
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]out\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.repl\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]docs\\'"))
-
-  (define-key evil-normal-state-map [escape] 'nrn/indent-sexp)
-
 
   ;; parinfer
   ;;
@@ -169,27 +164,16 @@ values."
 
   ;; copilot
   ;;
-  (with-eval-after-load 'company
-    ;; disable inline previews
-    (delq 'company-preview-if-just-one-frontend company-frontends))
+  ;; (with-eval-after-load 'company
+  ;; disable inline previews
+  ;; (delq 'company-preview-if-just-one-frontend company-frontends))
 
   (with-eval-after-load 'copilot
-    (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-    ;;(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
-    )
+    (define-key copilot-completion-map (kbd "H-p") 'copilot-accept-completion)
+    (define-key evil-insert-state-map (kbd "H-o") 'copilot-accept-completion-by-word)
+    (setq-default copilot-indent-offset-warning-disable t))
 
-  (add-hook 'prog-mode-hook 'copilot-mode)
-
-  (define-key evil-insert-state-map (kbd "<backtab>") 'copilot-accept-completion-by-word)
-  ;; (define-key evil-insert-state-map (kbd "C-TAB") 'copilot-accept-completion-by-word)
-
-
-  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode
-    "tt" 'kaocha-runner-run-test-at-point
-    "tr" 'kaocha-runner-run-tests
-    "ta" 'kaocha-runner-run-all-tests
-    "tw" 'kaocha-runner-show-warnings
-    "th" 'kaocha-runner-hide-windows))
+  (add-hook 'prog-mode-hook 'copilot-mode))
 
 
 (defun dotspacemacs/emacs-custom-settings ()
@@ -234,7 +218,7 @@ This function is called at the very end of Spacemacs initialization."
  '(line-spacing 0)
  '(mode-line-percent-position '(6 "%q"))
  '(package-selected-packages
-   '(dap-mode lsp-docker bui yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org tern telega rainbow-identifiers visual-fill-column tagedit string-inflection sql-indent smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode pretty-mode popwin po-mode persp-mode pcre2el paradox orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck-joker flycheck-clj-kondo flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit git-commit with-editor transient evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg emmet-mode elisp-slime-nav dumb-jump s diminish define-word company-web web-completion-data dash company-statistics company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections multiple-cursors paredit lv clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu cider sesman seq spinner queue pkg-info parseedn clojure-mode parseclj a epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup heroku-theme))
+   '(dap-mode lsp-docker bui docker tablist aio dockerfile-mode yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org tern telega rainbow-identifiers visual-fill-column tagedit string-inflection sql-indent smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode pretty-mode popwin po-mode persp-mode pcre2el paradox orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck-joker flycheck-clj-kondo flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit git-commit with-editor transient evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg emmet-mode elisp-slime-nav dumb-jump s diminish define-word company-web web-completion-data dash company-statistics company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections multiple-cursors paredit lv clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu cider sesman seq spinner queue pkg-info parseedn clojure-mode parseclj a epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup heroku-theme))
  '(paradox-github-token t)
  '(pdf-view-midnight-colors '("#655370" . "#fbf8ef"))
  '(projectile-globally-ignored-directories
