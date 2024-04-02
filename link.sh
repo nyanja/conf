@@ -7,7 +7,7 @@ mapping=(
     gitconfig         .gitconfig
     gitignore_global  .gitignore_global
     tmux.conf         .tmux.conf
-    karabiner.json    .config/karabiner/karabiner.json
+    karabiner         .config/karabiner
     spacemacs         .spacemacs
     spacemacs_layers  .emacs.spc/private
     doom              .doom.d

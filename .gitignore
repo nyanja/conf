@@ -1,5 +1,6 @@
 *.elc
 *.el~
+.lsp
 /emacs/el-get/
 /emacs/elpa/
 /emacs/quelpa/

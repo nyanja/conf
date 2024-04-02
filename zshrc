@@ -11,17 +11,13 @@ parse_git_branch() {
 }
 
 alias push='git push origin $(parse_git_branch)'
+alias gb='git branch --sort=-committerdate'
 
 alias master='git checkout master && git pull'
 alias rebase='git pull origin master --rebase'
 alias aa='git add .'
 alias ci='git commit -m '
-alias be='bundle exec'
-alias dg='git diff'
 alias gdh='git diff HEAD^'
-alias raisl='rails'
-alias k='cd ~/f/web'
-alias a='cd ~/f/mkadmin'
 
 # alias pg_start="launchctl load ~/Library/LaunchAgents"
 # alias pg_stop="launchctl unload ~/Library/LaunchAgents"
