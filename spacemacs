@@ -51,6 +51,7 @@
               cider-repl-buffer-size-limit 100)
 
      (lsp :variables
+          lsp-use-upstream-bindings t
           lsp-enable-indentation nil
           lsp-ui-doc-enable nil      ;; disable all doc popups
           lsp-ui-sideline-enable nil ;; disable sideline bar for less distraction
