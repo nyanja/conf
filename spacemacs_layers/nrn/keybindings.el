@@ -55,6 +55,7 @@
    ("c" "cider"
     ("a" nrn/cider-clear-aliases "clear aliases"))
    ("k" "mk"
+    ("f" nrn/mk-copy-and-find-api-function "find api handler")
     ("r" nrn/mk-reload-replica "reload replica")
     ("d" nrn/mk-reload-dev "reload dev")
     ("t" nrn/mk-trans "trans")))))

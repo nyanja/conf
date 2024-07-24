@@ -105,3 +105,30 @@
     (beginning-of-defun)
     (mark-sexp)
     (indent-for-tab-command)))
+
+
+(defun nrn/mk-copy-and-find-api-function ()
+    "Copy the content of a string in double quotes under the caret, remove trailing / if necessary, and find the corresponding function in api-v2-routes."
+    (interactive)
+    (let ((str (thing-at-point 'filename t)))
+
+      ;; Remove trailing slash if exists
+      (when (string-suffix-p "/" str)
+        (setq str (substring str 0 -1)))
+
+      (let ((cider-buffer (cider-current-repl-buffer)))
+        (if cider-buffer
+            (with-current-buffer cider-buffer
+              (goto-char (point-max))
+              (insert "(require 'mk.api.app)\n")
+              (cider-repl-return)
+              (insert "(def routes mk.api.app/api-v2-routes)\n")
+              (cider-repl-return)
+              (insert "(defn find-route [str] (-> (filter (fn [[k v]] (re-find (re-pattern str) (first k))) routes) first second :original))\n")
+              (cider-repl-return)
+              (sleep-for 0.1)
+              (insert (format "(find-route \"%s\")\n" str))
+              (sleep-for 0.1)
+              (cider-repl-return))))
+
+      (cider-switch-to-repl-buffer)))
