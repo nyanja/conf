@@ -67,7 +67,7 @@
 
      (copilot :location (recipe
                          :fetcher github
-                         :repo "zerolfx/copilot.el"
+                         :repo "copilot-emacs/copilot.el"
                          :files ("*.el" "dist"))))
 
    dotspacemacs-frozen-packages '()
@@ -120,7 +120,7 @@
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m")
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
-   ;; dotspacemacs-auto-resume-layouts t
+   dotspacemacs-auto-resume-layouts t
    dotspacemacs-large-file-size 1
    dotspacemacs-auto-save-file-location 'cache
    dotspacemacs-max-rollback-slots 5
@@ -148,12 +148,17 @@
 
 (defun dotspacemacs/user-config ()
 
+  ;; cure for hangings during savehist-save
+  (setq kill-ring-max 4)
+
+
   ;; Ignored by LSP
   ;;
   (with-eval-after-load 'lsp-mode
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]migrations\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]resources\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target$")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]out\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.repl\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]docs\\'"))
@@ -183,88 +188,88 @@
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
- '(cider-switch-to-repl-on-insert nil)
- '(compilation-scroll-output 'first-error)
- '(context-menu-mode t)
- '(css-indent-offset 2)
- '(custom-safe-themes
-   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default))
- '(evil-want-C-u-scroll nil)
- '(evil-want-Y-yank-to-eol nil)
- '(highlight-parentheses-background-colors '("#e8fce8" "#c1e7f8" "#f8e8e8"))
- '(hl-todo-keyword-faces
-   '(("TODO" . "#dc752f")
-     ("NEXT" . "#dc752f")
-     ("THEM" . "#2d9574")
-     ("PROG" . "#3a81c3")
-     ("OKAY" . "#3a81c3")
-     ("DONT" . "#f2241f")
-     ("FAIL" . "#f2241f")
-     ("DONE" . "#42ae2c")
-     ("NOTE" . "#b1951d")
-     ("KLUDGE" . "#b1951d")
-     ("HACK" . "#b1951d")
-     ("TEMP" . "#b1951d")
-     ("FIXME" . "#dc752f")
-     ("XXX+" . "#dc752f")
-     ("\\?\\?\\?+" . "#dc752f")))
- '(js-indent-level 2)
- '(line-spacing 0)
- '(mode-line-percent-position '(6 "%q"))
- '(package-selected-packages
-   '(bui yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org tern telega rainbow-identifiers visual-fill-column tagedit string-inflection sql-indent smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode pretty-mode popwin po-mode persp-mode pcre2el paradox orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck-joker flycheck-clj-kondo flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit git-commit with-editor transient evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg emmet-mode elisp-slime-nav dumb-jump s diminish define-word company-web web-completion-data dash company-statistics company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections multiple-cursors paredit lv clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu cider sesman seq spinner queue pkg-info parseedn clojure-mode parseclj a epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup heroku-theme))
- '(paradox-github-token t)
- '(pdf-view-midnight-colors '("#655370" . "#fbf8ef"))
- '(projectile-globally-ignored-directories
-   '(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "img"))
- '(scroll-bar-mode nil)
- '(scroll-conservatively 101)
- '(scroll-preserve-screen-position t)
- '(sql-connection-alist
-   '(("mk"
-      (sql-product 'postgres)
-      (sql-user "modnakastauser")
-      (sql-database
-       #("modnakasta" 0 10
-         (ws-butler-chg chg)))
-      (sql-server ""))))
- '(vc-annotate-background "#ecf0f1")
- '(vc-annotate-color-map
-   '((30 . "#e74c3c")
-     (60 . "#c0392b")
-     (90 . "#e67e22")
-     (120 . "#d35400")
-     (150 . "#f1c40f")
-     (180 . "#d98c10")
-     (210 . "#2ecc71")
-     (240 . "#27ae60")
-     (270 . "#1abc9c")
-     (300 . "#16a085")
-     (330 . "#2492db")
-     (360 . "#0a74b9")))
- '(vc-annotate-very-old-color "#0a74b9")
- '(wakatime-python-bin nil)
- '(warning-suppress-log-types '((lsp-mode)))
- '(window-divider-default-right-width 1)
- '(window-divider-mode t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(highlight-parentheses-highlight ((nil (:weight ultra-bold))) t)
- '(window-divider ((t (:foreground "dim gray"))))
- '(window-divider-last-pixel ((t (:foreground "dim gray")))))
-)
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(ansi-color-faces-vector
+     [default default default italic underline success warning error])
+   '(ansi-color-names-vector
+     ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+   '(cider-switch-to-repl-on-insert nil)
+   '(compilation-scroll-output 'first-error)
+   '(context-menu-mode t)
+   '(css-indent-offset 2)
+   '(custom-safe-themes
+     '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default))
+   '(evil-want-C-u-scroll nil)
+   '(evil-want-Y-yank-to-eol nil)
+   '(highlight-parentheses-background-colors '("#e8fce8" "#c1e7f8" "#f8e8e8"))
+   '(hl-todo-keyword-faces
+     '(("TODO" . "#dc752f")
+       ("NEXT" . "#dc752f")
+       ("THEM" . "#2d9574")
+       ("PROG" . "#3a81c3")
+       ("OKAY" . "#3a81c3")
+       ("DONT" . "#f2241f")
+       ("FAIL" . "#f2241f")
+       ("DONE" . "#42ae2c")
+       ("NOTE" . "#b1951d")
+       ("KLUDGE" . "#b1951d")
+       ("HACK" . "#b1951d")
+       ("TEMP" . "#b1951d")
+       ("FIXME" . "#dc752f")
+       ("XXX+" . "#dc752f")
+       ("\\?\\?\\?+" . "#dc752f")))
+   '(js-indent-level 2)
+   '(line-spacing 0)
+   '(mode-line-percent-position '(6 "%q"))
+   '(package-selected-packages
+     '(bui yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org tern telega rainbow-identifiers visual-fill-column tagedit string-inflection sql-indent smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode pretty-mode popwin po-mode persp-mode pcre2el paradox orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck-joker flycheck-clj-kondo flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit git-commit with-editor transient evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg emmet-mode elisp-slime-nav dumb-jump s diminish define-word company-web web-completion-data dash company-statistics company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections multiple-cursors paredit lv clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu cider sesman seq spinner queue pkg-info parseedn clojure-mode parseclj a epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup heroku-theme))
+   '(paradox-github-token t)
+   '(pdf-view-midnight-colors '("#655370" . "#fbf8ef"))
+   '(projectile-globally-ignored-directories
+     '(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "img"))
+   '(scroll-bar-mode nil)
+   '(scroll-conservatively 101)
+   '(scroll-preserve-screen-position t)
+   '(sql-connection-alist
+     '(("mk"
+        (sql-product 'postgres)
+        (sql-user "modnakastauser")
+        (sql-database
+         #("modnakasta" 0 10
+           (ws-butler-chg chg)))
+        (sql-server ""))))
+   '(vc-annotate-background "#ecf0f1")
+   '(vc-annotate-color-map
+     '((30 . "#e74c3c")
+       (60 . "#c0392b")
+       (90 . "#e67e22")
+       (120 . "#d35400")
+       (150 . "#f1c40f")
+       (180 . "#d98c10")
+       (210 . "#2ecc71")
+       (240 . "#27ae60")
+       (270 . "#1abc9c")
+       (300 . "#16a085")
+       (330 . "#2492db")
+       (360 . "#0a74b9")))
+   '(vc-annotate-very-old-color "#0a74b9")
+   '(wakatime-python-bin nil)
+   '(warning-suppress-log-types '((lsp-mode)))
+   '(window-divider-default-right-width 1)
+   '(window-divider-mode t))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(highlight-parentheses-highlight ((nil (:weight ultra-bold))) t)
+   '(window-divider ((t (:foreground "dim gray"))))
+   '(window-divider-last-pixel ((t (:foreground "dim gray")))))
+  )
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
