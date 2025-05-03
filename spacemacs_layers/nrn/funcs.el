@@ -1,4 +1,4 @@
-;;;
+;;; -*- lexical-binding: t -*-
 
 (defvar nrn/lsp-clojure-enabled nil)
 (defvar nrn/lsp-clojure-enabled-selected nil)
@@ -16,6 +16,10 @@
 
   (smartparens-mode t)
   ;; (aggressive-indent-mode t)
+
+  (modify-syntax-entry ?\? "_" clojure-mode-syntax-table)
+  (modify-syntax-entry ?\? "_" clojurec-mode-syntax-table)
+  (modify-syntax-entry ?\? "_" clojurescript-mode-syntax-table)
 
   (setq clojure-indent-style :always-indent)
   (setq clojure-align-forms-automatically t)
@@ -52,6 +56,7 @@
 (defun nrn/init-web-mode ()
   (smartparens-mode t)
   ;; (aggressive-indent-mode t)
+  (modify-syntax-entry ?% "_" web-mode-syntax-table)
   )
 
 
@@ -104,29 +109,39 @@
     (mark-sexp)
     (indent-for-tab-command)))
 
-
 (defun nrn/mk-copy-and-find-api-function ()
-  "Copy the content of a string in double quotes under the caret, remove trailing / if necessary, and find the corresponding function in api-v2-routes."
+  "Find the API function corresponding to the string at point and jump to its definition.
+The function looks for a string (assumed to be in double quotes) under the cursor,
+removes a trailing slash if present, then sends code to your Clojure nREPL that:
+  - requires 'mk.api.app,
+  - defines 'routes as mk.api.app/api-v2-routes,
+  - defines a helper function `find-route` to locate the matching route,
+  - prints (via pr-str) the result of (find-route <cleaned-string>).
+If a match is found, its var is looked up and jumped to using `cider-find-var`.
+Debug prints are included to show raw nREPL responses."
   (interactive)
-  (let ((str (thing-at-point 'filename t)))
-
-    ;; Remove trailing slash if exists
-    (when (string-suffix-p "/" str)
-      (setq str (substring str 0 -1)))
-
-    (let ((cider-buffer (cider-current-repl-buffer)))
-      (if cider-buffer
-          (with-current-buffer cider-buffer
-            (goto-char (point-max))
-            (insert "(require 'mk.api.app)\n")
-            (cider-repl-return)
-            (insert "(def routes mk.api.app/api-v2-routes)\n")
-            (cider-repl-return)
-            (insert "(defn find-route [str] (-> (filter (fn [[k v]] (re-find (re-pattern str) (first k))) routes) first second :original))\n")
-            (cider-repl-return)
-            (sleep-for 0.1)
-            (insert (format "(find-route \"%s\")\n" str))
-            (sleep-for 0.1)
-            (cider-repl-return))))
-
-    (cider-switch-to-repl-buffer)))
+  (let* ((str (thing-at-point 'filename t))
+         (cleaned (and str (if (string-suffix-p "/" str)
+                               (substring str 0 -1)
+                             str))))
+    (unless cleaned
+      (user-error "No string found at point"))
+    (message "Searching for API function matching: %s" cleaned)
+    (let ((processed nil))
+      (cider-interactive-eval
+       (format
+        "(do
+           (require 'mk.api.app)
+           (defn find-route [s]
+             (->> mk.api.app/api-v2-route
+                  (filter (fn [[k v]]
+                            (re-find (re-pattern s) (first k))))
+                  first
+                  second
+                  :original))
+           (pr-str (find-route \"%s\")))"
+        cleaned)
+       (lambda (response)
+         (let ((val (nrepl-dict-get response "value")))
+           (if (not (or (null val) (string= val "nil")))
+               (cider-find-var nil (substring (substring val 3) 0 -1)))))))))

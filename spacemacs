@@ -77,10 +77,6 @@
 
 
 (defun dotspacemacs/init ()
-  ;; prevent Too many open files error
-  ;; (setq max-specpdl-size 4000)
-  ;; (setq max-lisp-eval-depth 4000)
-
   (toggle-scroll-bar -1)
   (scroll-bar-mode -1)
 
@@ -144,7 +140,11 @@
    dotspacemacs-search-tools '("rg" "grep" "ag" "pt" "ack")
    dotspacemacs-whitespace-cleanup 'changed))
 
-(defun dotspacemacs/user-init ())
+(defun dotspacemacs/user-init ()
+  (modify-syntax-entry ?\? "_")
+
+  (modify-syntax-entry ?\% "_")
+  )
 
 
 (defun dotspacemacs/user-config ()
@@ -185,9 +185,8 @@
     (setq-default copilot-indent-offset-warning-disable t))
 
   (add-hook 'prog-mode-hook 'copilot-mode)
-
-
-  (add-hook 'git-commit-setup-hook 'copilot-chat-insert-commit-message))
+  ;; (add-hook 'git-commit-setup-hook 'copilot-chat-insert-commit-message)
+  )
 
 
 (defun dotspacemacs/emacs-custom-settings ()

@@ -640,6 +640,21 @@
                                 },
                                 "to": [{ "key_code": "right_arrow" }],
                                 "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "a_modifier",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "semicolon",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "return_or_enter" }],
+                                "type": "basic"
                             }
                         ]
                     },
@@ -1126,6 +1141,12 @@
                         "vendor_id": 12951
                     },
                     "ignore": true
+                }
+            ],
+            "fn_function_keys": [
+                {
+                    "from": { "key_code": "f6" },
+                    "to": [{ "software_function": { "iokit_power_management_sleep_system": {} } }]
                 }
             ],
             "name": "Default profile",
