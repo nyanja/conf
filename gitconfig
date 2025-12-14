@@ -6,9 +6,10 @@
 	co = checkout
 	st = status
 	aa = add .
+  pushtag = !git push origin $(git symbolic-ref HEAD) && git push origin $(git tag --points-at HEAD)
 [user]
 	email = nyancache@gmail.com
-	name = Alex Syletskyi
+	name = Oleksandr Syletskyi
 [core]
 	excludesfile = ~/.gitignore_global
 	editor = vim

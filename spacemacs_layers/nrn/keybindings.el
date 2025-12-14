@@ -40,12 +40,12 @@
 (define-key evil-normal-state-map (kbd "<home>") 'previous-buffer)
 (define-key evil-normal-state-map [escape] 'nrn/indent-sexp)
 
-(spacemacs/set-leader-keys-for-major-mode 'clojure-mode
-  "tt" 'kaocha-runner-run-test-at-point
-  "tr" 'kaocha-runner-run-tests
-  "ta" 'kaocha-runner-run-all-tests
-  "tw" 'kaocha-runner-show-warnings
-  "th" 'kaocha-runner-hide-windows)
+;; (spacemacs/set-leader-keys-for-major-mode 'clojure-mode
+;; "tt" 'kaocha-runner-run-test-at-point
+;; "tr" 'kaocha-runner-run-tests
+;; "ta" 'kaocha-runner-run-all-tests
+;; "tw" 'kaocha-runner-show-warnings
+;; "th" 'kaocha-runner-hide-windows)
 
 (spacemacs|spacebind
  ""

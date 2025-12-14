@@ -43,7 +43,8 @@
    (mod     0)
    (rem     0)
    (max     0)
-   (min     0))
+   (min     0)
+   (u/ukru  0))
 
   ;;  -> ->>  these form collide with elisp macros
   (put-clojure-indent '-> 0)

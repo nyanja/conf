@@ -61,15 +61,16 @@
 
    dotspacemacs-additional-packages
    '(sqlite3
-     kaocha-runner
+     ;; kaocha-runner
      flycheck-clj-kondo
      (forge :toggle nil)
 
-     copilot-chat
-     (copilot :location (recipe
-                         :fetcher github
-                         :repo "copilot-emacs/copilot.el"
-                         :files ("*.el" "dist"))))
+     ;;  copilot-chat
+     ;; (copilot :location (recipe
+     ;; :fetcher github
+     ;; :repo "copilot-emacs/copilot.el"
+     ;; :files ("*.el" "dist")))
+     )
 
    dotspacemacs-frozen-packages '()
    dotspacemacs-excluded-packages '(spaceline)
@@ -161,8 +162,7 @@
   (with-eval-after-load 'lsp-mode
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]migrations\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]resources\\'")
-    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
-    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target$")
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target.*\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]out\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.repl\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]docs\\'"))
@@ -179,12 +179,12 @@
   ;; disable inline previews
   ;; (delq 'company-preview-if-just-one-frontend company-frontends))
 
-  (with-eval-after-load 'copilot
-    (define-key copilot-completion-map (kbd "H-p") 'copilot-accept-completion)
-    (define-key evil-insert-state-map (kbd "H-o") 'copilot-accept-completion-by-word)
-    (setq-default copilot-indent-offset-warning-disable t))
+  ;; (with-eval-after-load 'copilot
+  ;; (define-key copilot-completion-map (kbd "H-p") 'copilot-accept-completion)
+  ;; (define-key evil-insert-state-map (kbd "H-o") 'copilot-accept-completion-by-word)
+  ;; (setq-default copilot-indent-offset-warning-disable t))
 
-  (add-hook 'prog-mode-hook 'copilot-mode)
+  ;; (add-hook 'prog-mode-hook 'copilot-mode)
   ;; (add-hook 'git-commit-setup-hook 'copilot-chat-insert-commit-message)
   )
 
