@@ -27,6 +27,8 @@
   (define-clojure-indent
    (some->  0)
    (some->> 0)
+   (cond->  0)
+   (cond->> 0)
    (as->    0)
    (and     0)
    (or      0)
@@ -44,7 +46,8 @@
    (rem     0)
    (max     0)
    (min     0)
-   (u/ukru  0))
+   (u/ukru  0)
+   (dom/c   0))
 
   ;;  -> ->>  these form collide with elisp macros
   (put-clojure-indent '-> 0)
@@ -105,10 +108,80 @@
 
 (defun nrn/indent-sexp ()
   (interactive)
-  (save-excursion
-    (beginning-of-defun)
-    (mark-sexp)
-    (indent-for-tab-command)))
+  (if (and buffer-file-name
+           (member (file-name-extension buffer-file-name) '("ts" "tsx" "js" "jsx")))
+      ;; For TypeScript/JavaScript files, format with LSP or project tools
+      (cond
+       ;; Try LSP formatting first (respects eslint/prettier config)
+       ((and (boundp 'lsp-mode) lsp-mode)
+        (lsp-format-buffer))
+       ;; Fall back to project's eslint (which includes prettier via plugin)
+       ((locate-dominating-file default-directory "package.json")
+        (let* ((project-root (locate-dominating-file default-directory "package.json"))
+               (eslint-cmd (concat "cd " (shell-quote-argument project-root)
+                                   " && npx eslint --fix " (shell-quote-argument buffer-file-name))))
+          (save-buffer)
+          (shell-command eslint-cmd)
+          (revert-buffer t t t)
+          (message "Formatted with project's ESLint")))
+       ;; Last resort: try global prettier
+       ((executable-find "prettier")
+        (let ((current-pos (point)))
+          (shell-command-on-region
+           (point-min)
+           (point-max)
+           (format "prettier --stdin-filepath %s" (shell-quote-argument buffer-file-name))
+           (current-buffer)
+           t
+           "*prettier-errors*"
+           t)
+          (goto-char (min current-pos (point-max)))))
+       (t (message "No formatter found. Install prettier or enable LSP mode.")))
+    ;; For other files, use the original indent behavior
+    (save-excursion
+      (beginning-of-defun)
+      (mark-sexp)
+      (indent-for-tab-command))))
+
+(defun nrn/goto-css-module-class ()
+  "Jump to CSS class definition in corresponding style module.
+Works when cursor is on `styles.className` in TSX files."
+  (interactive)
+  (let* ((symbol (thing-at-point 'symbol t))
+         (line (thing-at-point 'line t)))
+    (when (and symbol (string-match "styles\\." line))
+      (let* ((class-name symbol)
+             ;; Find the import line for styles
+             (import-pattern "import\\s-+styles\\s-+from\\s-+['\"]\\([^'\"]+\\)['\"]")
+             style-file)
+        (save-excursion
+          (goto-char (point-min))
+          (when (re-search-forward import-pattern nil t)
+            (setq style-file (match-string 1))))
+        (when style-file
+          (let* ((current-dir (file-name-directory buffer-file-name))
+                 (full-path (expand-file-name style-file current-dir)))
+            ;; Handle extension-less imports
+            (unless (file-exists-p full-path)
+              (setq full-path (concat full-path ".module.scss"))
+              (unless (file-exists-p full-path)
+                (setq full-path (concat (file-name-sans-extension full-path) ".module.css"))))
+            (when (file-exists-p full-path)
+              (find-file full-path)
+              (goto-char (point-min))
+              (when (re-search-forward (format "\\.%s\\b" class-name) nil t)
+                (beginning-of-line)))))))))
+
+(defun nrn/maybe-goto-css-class (orig-fun &rest args)
+  "Try CSS module navigation first, fall back to LSP."
+  (let ((symbol (thing-at-point 'symbol t))
+        (line (thing-at-point 'line t)))
+    (if (and symbol
+             buffer-file-name
+             (member (file-name-extension buffer-file-name) '("tsx" "jsx"))
+             (string-match "styles\\." line))
+        (nrn/goto-css-module-class)
+      (apply orig-fun args))))
 
 (defun nrn/mk-copy-and-find-api-function ()
   "Find the API function corresponding to the string at point and jump to its definition.

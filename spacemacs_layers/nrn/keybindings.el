@@ -38,7 +38,7 @@
 
 (define-key evil-normal-state-map (kbd "<end>") 'next-buffer)
 (define-key evil-normal-state-map (kbd "<home>") 'previous-buffer)
-(define-key evil-normal-state-map [escape] 'nrn/indent-sexp)
+
 
 ;; (spacemacs/set-leader-keys-for-major-mode 'clojure-mode
 ;; "tt" 'kaocha-runner-run-test-at-point

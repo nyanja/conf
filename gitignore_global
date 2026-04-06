@@ -7,3 +7,5 @@
 .clj-kondo
 **/.emacs.d/private*
 node_modules
+.env.local
+.claude

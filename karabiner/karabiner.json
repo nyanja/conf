@@ -1167,7 +1167,7 @@
                     "to": [{ "software_function": { "iokit_power_management_sleep_system": {} } }]
                 }
             ],
-            "name": "Default profile",
+            "name": "Default",
             "selected": true,
             "simple_modifications": [
                 {

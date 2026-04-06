@@ -37,6 +37,7 @@ alias rebase='git pull origin master --rebase'
 alias aa='git add .'
 alias ci='git commit -m '
 alias gdh='git diff HEAD^'
+alias 'c!'='claude --dangerously-skip-permissions'
 
 # alias pg_start="launchctl load ~/Library/LaunchAgents"
 # alias pg_stop="launchctl unload ~/Library/LaunchAgents"
@@ -67,3 +68,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# Tokens loaded from ~/.env.local (not in version control)
+[ -f ~/.env.local ] && source ~/.env.local
