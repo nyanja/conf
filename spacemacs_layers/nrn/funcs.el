@@ -1,16 +1,18 @@
 ;;; -*- lexical-binding: t -*-
 
-(defvar nrn/lsp-clojure-enabled nil)
-(defvar nrn/lsp-clojure-enabled-selected nil)
-
+(defun nrn/enable-paredit-mode-safe ()
+  "Enable `paredit-mode' if it is available.
+Guards against `enable-paredit-mode' being undefined during package
+loaddef-scraping on a fresh install (e.g. after an Emacs version bump),
+when paredit has not been loaded yet."
+  (when (fboundp 'enable-paredit-mode)
+    (enable-paredit-mode)))
 
 (defun nrn/init-clojure-mode ()
-  (when (and (not nrn/lsp-clojure-enabled) (not nrn/lsp-clojure-enabled-selected))
-    (setq nrn/lsp-clojure-enabled (y-or-n-p "Enable lsp for clojure?"))
-    (setq nrn/lsp-clojure-enabled-selected t))
-  (when nrn/lsp-clojure-enabled
-    (lsp))
-
+  ;; Clojure backend (CIDER vs LSP) is chosen by Spacemacs via the
+  ;; `clojure-backend' layer variable (set to 'cider in ~/.spacemacs), so no
+  ;; per-buffer prompt is needed here. Flip that variable to 'lsp if you ever
+  ;; want clojure-lsp instead.
   (enable-paredit-mode)
   (clj-refactor-mode)
 
@@ -75,6 +77,22 @@
 (defun nrn/mk-trans ()
   (interactive)
   (cider-insert-in-repl "(trans)" t))
+
+(defvar nrn/mk-black-user-id 102
+  "Default user id for `nrn/mk-remove-black'.")
+
+(defun nrn/mk-remove-black (uid)
+  "Remove loyalty and black subscription for UID via the CIDER REPL.
+Prompts in the minibuffer, defaulting to `nrn/mk-black-user-id'."
+  (interactive
+   (list (read-number "Remove black for user id: " nrn/mk-black-user-id)))
+  (cider-insert-in-repl
+   (format "(do (require '[mk.api.db :as db] '[mk.api.cache :as cache])
+    (db/execute {:delete-from :product_subscription :where [:= :user_id %d]})
+    (db/execute {:delete-from :user_loyalty :where [:= :user_id %d]})
+    (cache/invalidate :user %d))"
+           uid uid uid)
+   t))
 
 (defun nrn/cider-clear-aliases ()
   (interactive)

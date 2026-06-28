@@ -115,6 +115,7 @@ Keyboard layout switching (triggered by Karabiner via F-keys):
 | SPC d k f | Find API handler |
 | SPC d k r | Reload replica |
 | SPC d k d | Reload dev |
+| SPC d k b r | Remove black (loyalty + subscription) for a user |
 
 ## Requirements
 

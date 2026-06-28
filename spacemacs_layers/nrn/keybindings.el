@@ -51,6 +51,9 @@
  ""
  :global
  (("d" "nrn"
+   ("d" difftastic-magit-diff "difftastic diff")
+   ("s" difftastic-magit-show "difftastic show")
+   ("f" difftastic-files "difftastic files")
    ("r" nrn/sort-and-align-clj-require "sort requires")
    ("c" "cider"
     ("a" nrn/cider-clear-aliases "clear aliases"))
@@ -58,4 +61,6 @@
     ("f" nrn/mk-copy-and-find-api-function "find api handler")
     ("r" nrn/mk-reload-replica "reload replica")
     ("d" nrn/mk-reload-dev "reload dev")
+    ("b" "black"
+     ("r" nrn/mk-remove-black "remove"))
     ("t" nrn/mk-trans "trans")))))
