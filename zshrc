@@ -33,11 +33,26 @@ master() {
     return 1
   fi
 }
-alias rebase='git pull origin master --rebase'
+# Pull --rebase from origin's default branch (main or master)
+unalias rebase 2>/dev/null
+rebase() {
+  local branch
+  if git show-ref --verify --quiet refs/remotes/origin/main; then
+    branch=main
+  elif git show-ref --verify --quiet refs/remotes/origin/master; then
+    branch=master
+  else
+    echo "Neither origin/main nor origin/master found"
+    return 1
+  fi
+  echo "Rebasing onto origin/$branch..."
+  git pull origin "$branch" --rebase
+}
 alias aa='git add .'
 alias ci='git commit -m '
 alias gdh='git diff HEAD^'
-alias 'c!'='claude --dangerously-skip-permissions'
+alias c='claude --dangerously-skip-permissions'
+alias cc='claude --dangerously-skip-permissions --continue'
 
 # alias pg_start="launchctl load ~/Library/LaunchAgents"
 # alias pg_stop="launchctl unload ~/Library/LaunchAgents"
@@ -57,9 +72,8 @@ export PATH="$HOME/.local/bin:$PATH"
 # fnm
 FNM_PATH="/opt/homebrew/opt/fnm/bin"
 if [ -d "$FNM_PATH" ]; then
-  eval "`fnm env`"
+  eval "`fnm env --use-on-cd`"
 fi
-export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="/Users/nyancache/Library/pnpm"
